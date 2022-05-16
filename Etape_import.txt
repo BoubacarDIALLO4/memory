@@ -1,0 +1,469 @@
+#  Connection docker registry ###
+docker login -u acrprodaivi001 -p YtO5Xgk7DFdKZmP7Usub+5qMIctVY7kC acrprodaivi001.azurecr.io
+
+export  PASSWORD=YtO5Xgk7DFdKZmP7Usub+5qMIctVY7kC
+export  LOGIN_NAME=acrprodaivi001
+
+/opt/aivi/current/bin/python
+
+sudo systemctl start firewalld.service
+ firewall-cmd --zone=public  --add-port=5000/tcp --permanent
+sudo firewall-cmd --zone=public  --add-port=5001/tcp --permanent
+sudo systemctl restart firewalld.service
+ sudo firewall-cmd  --reload
+
+
+/opt/aivi/current/bin/python  sudo python3 -m pip install opencv-contrib-python
+/opt/aivi/current/bin/python   python3 -m pip install opencv-contrib-python
+ /opt/aivi/current/bin/python  -m pip install opencv-contrib-python==3.3.0.10
+
+ sudo yum install libsm6 libxrender1 libfontconfig1
+
+sudo yum install libXext libSM libXrender
+
+ systemctl get-default
+
+ systemctl set-default graphical.target
+
+sudo systemctl set-default graphical.target
+
+ systemctl get-default
+
+sudo reboot
+
+systemctl start aivi-inference.service
+
+
+# Machine Azure
+
+fcm-ansible ansible_host=23.97.171.215
+fcm-qualif ansible_host=104.45.18.94
+
+##Installer tensorflow in gpu
+pip3 install --upgrade --force-reinstall tensorflow-gpu
+
+sudo pip install tensorflow==1.14
+
+/opt/aivi/current/bin/python  -m pip freeze
+
+lspci # info sur le OS
+lshw -short # sur OS
+uname -a 
+
+### Changement pour la désynchronization ####
+"nodes": [
+  {
+    "name": "load",
+    "type": "LoadResultFromLocalStorage",
+    "saved_path": le chemin vers buffer
+  },
+  {
+    "name": "load",
+    "type": "LoadResultFromLocalStorage",
+    "saved_pah": le chemin vers archive
+  }
+]
+
+
+#####
+curl --header "Content-Type: application/json" 
+  --request POST \
+  --data '{"barcode":"22328360"}' \
+http://0.0.0.0:5001/aivi/inject-barcode
+### Sumiler la désync ###
+curl --header "Content-Type: application/json"  --request POST   --data '{"barcode":" 223462705J210308204214"}' http://0.0.0.0:5001/aivi/inject-barcode
+# Command pour lancer Pylon ##
+/opt/pylon/Pylon5/bin/PylonViewerapp
+
+### Port ###
+ netstat -an  | grep 49320
+ netstat -ntp
+
+
+
+
+#### Git tag ### 
+Les étapes à suivre pour le dockerfile
+Tu crée ta branche qui part de master git checkout -b nom-de-ta-branche
+Tu fais les modifications sur les fichiers
+Tu commit git commit -am "Explication des modifications que tu as fait en anglais"
+Tu push tes modifs sur Azure DevOps git push origin nom-de-ta-branche
+Tu fais ta pull request de ta branche vers master sur Azure DevOps
+Une fois validée par un autre membre de l'équipe tu la complete
+Puis sur ton terminal tu repars sur la branche master git checkout master
+Tu pull les modifications de master (ce que tu as merge avec ta pull request) git pull origin master
+Tu tag git tag 0.5.0
+Tu push le tag sur Azure DevOps git push --tags origin
+Puis normalement tu as ta pipeline qui se lance et qui te build et push tes deux container fcm-ci et fcm-builder
+Une fois que ta pipeline de construction des dockerfiles est bien terminée tu dois faire les modifs dans les azure_pipelines du front et du back et tu t'assures que ça ne pète rien
+
+##### Acces sur Agent ####
+"10.0.4.4",
+
+  "10.0.4.8",
+
+  "10.0.4.5",
+
+  "10.0.4.6",
+
+  "10.0.4.7",
+
+  "10.0.4.9"
+
+#### New Ip ###
+Hello FCM team, 
+    Public IP of VM on azure are changed, here are new IPs:
+•	fcm_analytic_public_ip = 13.95.135.35
+•	fcm_central_qualif_public_ip = 104.46.58.152
+•	fcm_b4bracket_public_ip = 104.40.176.90
+•	fcm_neuralnet_public_ip = 104.40.176.62
+•	fcm_aivi_qualif_public_ip = 104.46.46.169
+
+#### Acces token for prod #####
+hv3dndrdmv4as2kunf3b6567j35ae347mc6t7ugtuun4y6rgtsna
+
+### Second token ##
+ur2olwxwf2blg5zodxmorqy2piddftnlpo344ch3yhjj2vqy2zjq
+
+#### New token ######
+wiaokik5txhquppmgqpe3zngs4yhpagyuulrvkk32pe4ewhna4ha
+
+## Personnal acess token ##
+
+gsysux4y57wodr5imunri2xeud6fp27sqldpwcynedzkk7hndmmq
+
+
+#  Access token for deployment azure #
+7yyr6fy76rrgcjj4r3oa55dr37jfjp3jbzreno4ll5xcfmjcprdq
+
+
+###  New token for PROD 28/10/2021/ ###
+
+m4imihi52x5j3xnqyiajv3t4aqygtcgpdzr7xo6unoa6lstbvx3q
+
+
+###### Deploiement group ###
+mkdir azagent;cd azagent;
+cp /tmp/vsts-agent-linux-x64-2.170.1.tar.gz vstsagent.tar.gz
+tar -zxvf vstsagent.tar.gz
+./config.sh --proxyurl proxy.standard.corp:8080 --deploymentgroup --deploymentgroupname "FAS-MSM-PROD" --acceptteeeula --agent $HOSTNAME --url https://dev.azure.com/faurecia-dsf/ --work _work --projectname 'AIVI' --runasservice
+sudo ./svc.sh install; sudo ./svc.sh start; 
+
+#### Stratos #####
+https://stratos.app.corp/index.do?  ### Acces Admin
+
+https://stratos.app.corp/ess.do ## Acces utilisateur
+
+### Kannectbar issues ###
+/etc/init.d/
+
+
+## 
+
+http://aivi-fcmassemblycheck-qualif.westeurope.cloudapp.azure.com:5000/fcm/#/
+
+
+#### Basler Issues ###
+https://www.drivereasy.com/knowledge/fix-error-0x80070643-on-windows/
+
+### Basler Github ##
+https://github.com/basler/pypylon
+
+https://docs.baslerweb.com/configuring-a-camera
+
+### Connect to a docker ###
+docker exec -it nom-container  bash
+
+###### Jive #######
+
+https://faurus.ww.faurecia.com/groups/aivi-project
+
+
+### Connection grafana ####
+user: admin
+MP: password
+https://teams.microsoft.com/l/channel/19%3a0fa454c5d2844958a5e4276e15b10a08%40thread.skype/Incidents%2520PROD?groupId=3687e46f-2f58-4956-b836-8fd0f4106347&tenantId=5047bca2-da88-442e-a09a-d9b8af692adc
+
+
+### Find the files in lunix ####
+find /storage/aivi/archive/2020/05/06 -name "NLRRM05J_223284905*.jpeg" | wc -l
+
+### Site officielle de nvidia ####
+http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/
+
+https://redhatnordicssa.github.io/how-we-test-our-roles # test role molecule 
+
+
+### lancer le baslor config ###
+http://localhost:5000/basler-configurator/index.html
+
+sudo systemctl stop aivi-inference.service
+sudo systemctl start basler-configurator.service
+
+
+
+./azcopy copy "https://staprodlrsaivi002.blob.core.windows.net/artifact-001/rpms/kernel_/?sv=2018-03-28&si=artifact-001-all&sr=c&sig=mpjUomCWW7ZIIaZqp3Ijuj10HGZrF7r6MWptLdqS3us%3D" -
+-recursive=true
+
+### Hydra ### 
+https://network.app.fr.corp//Local/PUB/fhnc/index_ls_corp.php ## Contry codes and QR codes
+
+### Test 
+https://wweasmon0007.dc.ege.ds/test/check_mk/index.py?start_url=%2Ftest%2Fcheck_mk%2Fview.py%3Ffilled_in%3Dfilter%26service_regex%3Dru%26view_name%3Dsearchsvc
+
+### Cours docker et azure pipelines ###
+https://www.clouddev.engineering/deploying-a-container-in-an-azure-devops-pipeline/
+
+#### NFS ###
+sudo exportfs -a  " Dans la Edge: pour exporter les directories vers la Central 
+ sudo mount -t nfs4 10.0.3.4:/storage/aivi/archive/ /storage/archive/qualif_fcm  " Dans la Central: pour monter les directories"
+ 
+  
+ 
+ ### Formation Azure ###
+ https://docs.microsoft.com/fr-fr/learn/azure/
+ https://www.microsoft.com/en-us/videoplayer/embed/RE4DoHP
+ https://docs.microsoft.com/fr-fr/learn/certifications/exams/az-900
+ https://docs.microsoft.com/fr-fr/learn/certifications/exams/az-900
+ 
+ ### DNS resol.conf ####
+ https://forums.fedora-fr.org/viewtopic.php?id=8340
+ 
+ #### hydra POC #####
+ MP : maH4XpAV
+ https://www.digitalocean.com/community/tutorials/how-to-monitor-server-health-with-checkmk-on-ubuntu-18-04  *** Doc ***
+ https://spacewalkserver.westeurope.cloudapp.azure.com/hydradev/check_mk/index.py?start_url=%2Fhydradev%2Fcheck_mk%2Fwato.py " server
+ https://www.alibabacloud.com/blog/how-to-install-check-mk-monitoring-tool-on-centos-7_594937 " doc 
+ https://www.fosslinux.com/8424/install-and-configure-check_mk-server-on-centos-7.htm
+ https://spacewalkserver.westeurope.cloudapp.azure.com/hydradev/check_mk/index.py?start_url=%2Fhydradev%2Fcheck_mk%2Fwato.py%3Ffolder%3D%26host%3Dspacewalk-server%26mode%3Dedit_host
+ ## Log monitoring ###
+ https://checkmk.de/cms_legacy_logfiles.html#Logwatch%20on%20Linux%20and%20UNIX
+ https://forum.checkmk.com/t/using-logwatch-to-monitor-domain-controller-security-log-not-getting-event-console-notifications/17231/5
+ 
+ https://spacewalkserver.westeurope.cloudapp.azure.com/hydradev/check_mk/logwatch.py # pour supprimer les logs dans le server
+ 
+ ### Digiposte ###
+ https://compte.laposte.fr/fo/v1/login?captcha=1
+ 
+ ### Logrotate ###
+ https://www.jamescoyle.net/cheat-sheets/676-logrotate-cheat-sheet
+ https://linux.die.net/man/8/logrotate
+ https://serverfault.com/questions/212751/script-to-delete-files-older-than-30days
+ 
+ 
+ ### Github  Check mk##
+https://gist.github.com/nitrag/ada99daf364f5c5b27049d51ae740e25 
+
+##### Config test ###
+https://pythonexamples.org/run.php?pgm=str+%3D+%27pythonexamples125%27%0A%0Aisalnum+%3D+str.isalnum%28%29%0A%0Aprint%28%27Is+String+Alphanumeric+%3A%27%2C+isalnum%29
+https://pythonexamples.org/python-string-check-if-alphanumeric/
+
+### Azure 900 Certification #
+Id: bdiallo15
+MP: Maria@2021
+
+
+https://www.skillpipe.com/#/account/login # Revoir le cours de AZ900
+
+https://www.certiport.com/Portal/DesktopDefault.aspx?roleid=1 # Pour s'inscrire et passer la certiport
+
+
+### Terraform ####
+-compact-warnings -input=false
+
+https://stackoverflow.com/questions/61729574/azure-devops-multistage-pipeline-yaml-how-to-checkout-multiple-repos/61729667#61729667
+
+###
+https://stackoverflow.com/questions/52851994/copy-a-file-from-one-location-to-another-in-python
+
+
+###
+https://stackoverflow.com/questions/63472046/agent-pool-deployment-pool
+
+
+####
+touch .vault_pass.txt
+
+
+### AZURE devops ci-CD cours ###
+https://docs.microsoft.com/en-us/azure/devops/pipelines/release/deploy-multiple-branches?view=azure-devops
+echo "$(VAULT_PASSWORD)" >> .vault_pass.txt
+
+
+###  Dependencies of minizip 19 ###
+ zlib-1.2.7-19.el7_9.x86_64
+ zlib-devel.x86_64 0:1.2.7-19.el7_9
+ 
+ 
+ ## NIFI ##
+  nc -z -v euedcunil012.dc.ege.ds 10080
+  nc -z -v euedcunil012.dc.ege.ds 8443
+   nc -z -v euedcunil013.dc.ege.ds 10080
+
+
+## Copy files from qualif #
+
+ ls -t  /storage/aivi/buffer/2021/03/25/  | tail -n -1015  > /tmp/test.txt
+ for file in $(cat test.txt ); do cp "/storage/aivi/buffer/2021/03/25/$file" /tmp/MSA/; done
+ 
+ ####
+ That should put an sslCert in /usr/share/rhn and when you join your client use --sslCACert=/usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT 
+ 
+ https://access.redhat.com/solutions/15753
+ 
+ ### Transfert KT ##
+ transfer devOps
+
+ 
+
+
+1. devOps release pipeline, security permission and task group etc.
+2. Terraform env creation and destruction
+3. Ansible automation steps
+4. Management resources from Azure portal: blob storage, container registry, infrastructure ex. network, vm and security
+5. Problem resolving: security team, 9tech, opcua connection test
+6. Hardware: prepare a machine from zero (OS + deployment + camera)
+7. OS image: https://dev.azure.com/faurecia-dsf/AIVI/_git/os-edge-station
+8. Introduction repos git
+
+### Artifis 2 ###
+
+https://stackoverflow.com/questions/15088037/python-script-to-do-something-at-the-same-time-every-day
+https://codereview.stackexchange.com/questions/23570/running-over-a-log-file-to-extract-log-times
+
+## Agent SAS token issues ##
+https://stackoverflow.com/questions/45034396/cannot-register-a-build-agent-in-vsts
+https://docs.microsoft.com/fr-fr/biztalk/core/feature-pack-create-vsts-token
+
+### Var ##
+https://www.javaer101.com/en/article/39894271.html
+https://tecadmin.net/tutorial/bash-scripting/bash-command-arguments/
+
+
+"""""" admin ###
+
+https://fsamt.app.corp/PWSelfService.aspx
+ 
+ 
+ #### VNC issues black screen ###
+ https://stackoverflow.com/questions/12050021/how-to-make-xvfb-display-visible/40678605#40678605
+ https://stackoverflow.com/questions/36221215/using-vncserver-gui-application-virtual-display-in-docker-container
+ https://askubuntu.com/questions/453109/add-fake-display-when-no-monitor-is-plugged-in
+ 
+ 
+ #### Copy files vers blob #
+  .\azcopy.exe copy "D:\images\15_images\*" "https://staivibushingdev.blob.core.windows.net/fas-bushing" --recursive=true
+  
+  
+  #### Pylon grab image ###
+  https://stackoverflow.com/questions/54589397/how-to-configure-hardware-trigger-using-python-in-pylon
+  
+  ### Use python to get the scanner in/out ###
+  https://stackoverflow.com/questions/63116307/python-get-input-from-hid-device-outside-the-active-window
+  https://stackoverflow.com/questions/60437858/how-to-select-which-device-to-record-with-python-pyaudio
+  
+  https://techdocs.zebra.com/dcs/scanners/sdk-linux/utilities/
+  
+  https://stackoverflow.com/questions/14575403/pyusb-usb-barcode-scanner
+  
+  https://centos.pkgs.org/7/epel-x86_64/zbar-0.10-27.el7.x86_64.rpm.html
+
+https://supportcommunity.zebra.com/s/article/Step-by-step-guide-to-install-and-uninstall-Zebra-Barcode-Scanner-SDK-for-Linux?language=en_US
+https://techdocs.zebra.com/dcs/scanners/sdk-linux/about/
+https://www.zebra.com/us/en/support-downloads/software/developer-tools/corescanner-driver.html
+https://www.zebra.com/fr/fr/support-downloads/software/developer-tools/scanner-sdk-for-linux.html
+  
+   Bus=0003 Vendor=05e0 Product=1200 Version=0110
+N: Name="Symbol Technologies, Inc, 2008 Symbol Bar Code Scanner"
+P: Phys=usb-0000:00:14.0-2.3/input0
+S: Sysfs=/devices/pci0000:00/0000:00:14.0/usb1/1-2/1-2.3/1-2.3:1.0/input/input35
+U: Uniq=S/N:42DBC06234DE40AA8D8B021C4B1C41F0 Rev:PAACJS00-001-R033
+H: Handlers=sysrq kbd leds event17
+B: PROP=0
+B: EV=120013
+B: KEY=1000000000007 ff9f207ac14057ff febeffdfffefffff fffffffffffffffe
+B: MSC=10
+B: LED=1f
+
+https://gist.github.com/michalfapso/1755e8a35bb83720c2559ce8ffde5f85
+
+https://stackoverflow.com/questions/44407834/detect-log-file-rotation-while-watching-log-file-for-modification
+https://stackoverflow.com/questions/3290292/read-from-a-log-file-as-its-being-written-using-python
+
+https://qastack.fr/programming/5404068/how-to-read-keyboard-input
+
+https://stackoverflow.com/questions/21648595/python-evdev-and-bar-code-scanner
+
+https://stackoverflow.com/questions/61406428/how-to-compare-last-value-to-new-value
+
+https://superuser.com/questions/473411/redirect-physical-keyboard-input-to-ssh/1299783#1299783
+
+https://serverfault.com/questions/385260/bind-usb-keyboard-exclusively-to-specific-application/976557#976557
+
+https://stackoverflow.com/questions/1698423/how-can-you-take-ownership-of-a-hid-device
+
+https://gist.github.com/JoachimL/1629f701fdb38427091710fc0caef67d
+
+
+https://www.py4u.net/discuss/204082
+https://pypi.org/project/zebra-scanner/
+
+### BUG of centos ###
+https://bugs.centos.org/print_all_bug_page.php
+
+https://docs.microsoft.com/fr-fr/azure/virtual-machines/linux/cli-ps-findimage
+
+
+#### Terraform install##
+https://www.azuredevopslabs.com/labs/vstsextend/terraform/
+
+
+### FIX AZURE DEVOPS AGENTS ###
+  yum install -y wget && wget -P /etc/yum.repos.d/ https://packages.efficios.com/repo.files/EfficiOS-RHEL7-x86-64.repo && rpmkeys --import https://packages.efficios.com/rhel/repo.key && yum updateinfo -y && yum install -y lttng-ust
+  
+  
+  https://github.com/microsoft/azure-pipelines-agent/issues/3556
+  https://github.com/microsoft/azure-pipelines-agent/issues/3190
+  
+  https://github.com/xlz-jgoutin/azure-pipelines-agent/releases
+  
+  ### Pylon Viewer ###
+  https://www.pythonforthelab.com/blog/getting-started-with-basler-cameras/
+  
+  #### Create a UI with Flask ###
+  https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3-fr
+  
+  https://www.digitalocean.com/community/users/ltagliaferri
+  
+  https://github.com/microsoft/azure-pipelines-tasks/pull/15386/files
+  
+  
+  ##### Update WSL2 on windows 10 ##
+  https://docs.microsoft.com/fr-fr/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package
+  
+  pip install aivi-core --upgrade --extra-index-url=https://m4imihi52x5j3xnqyiajv3t4aqygtcgpdzr7xo6unoa6lstbvx3q:@pkgs.dev.azure.com/faurecia-dsf/AIVI/_packaging/aivi/pypi/simple/
+  
+  https://stackoverflow.com/questions/66069215/the-client-is-using-an-unsupported-version-of-the-socket-io-or-engine-io-protoco ## pour les depences
+  
+  https://phoenixnap.com/kb/install-latest-node-js-and-nmp-on-ubuntu
+  
+  https://programmaticponderings.com/myshell/
+  
+  https://danielwertheim.se/azure-devops-service-containers-docker-compose/
+  
+  https://github.com/Azure/Industrial-IoT
+  
+  #### Behave test for rabbitmq ####
+  https://bitbucket.org/fbanke/workspace/snippets/8ekax5/test-acceptance-of-messages
+  
+  ### CENTOS REPOS RPM FILES ###
+  https://pkgs.org/download/kmod-nvidia
+  
+  # Use proxy ##
+  $env:HTTP_PROXY="http://diallobo:DiamiTimeo@2021proxy.standard.corp:8080"
+(base) PS D:\Project_terraform> $env:HTTP_PROXY="http://diallobo:DiamiTimeo@2021@proxy.standard.corp:8080"
+(base) PS D:\Project_terraform> $env:HTTPS_PROXY="http://diallobo:DiamiTimeo@2021@proxy.standard.corp:8080"
+
+ # Scale set azure #
+ https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/tutorial-use-custom-image-cli
+  

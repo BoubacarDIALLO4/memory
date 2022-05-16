@@ -1,0 +1,56 @@
+mkdir -p $(ANSIBLE_ROLES)/deploy_models/files/models/
+
+tar xzvf fcm_models-latest.tar.gz - C $(ANSIBLE_ROLES)/deploy_models/files/models/
+rm -f fcm_models-latest.tar.gz
+
+$(ANSIBLE_ROLES)/deploy_models/files/models/
+
+echo "******** NEW MODEL FILES TO BE DEPLOYED *******"
+ls $(ANSIBLE_ROLES)/deploy_models/files/models/
+
+
+#changed_when: package_installed.rc != 0
+
+ args:
+    warn: false
+  register: package_installed
+  failed_when: false
+  
+### Connection cnetra lumieère en remote ###
+echo "********* ls /opt/aivi/models  on edgestation  *************"
+sshpass -p '$(AIVIADMIN_PASSWORD)' ssh aiviadmin@172.16.2.41  cat  /opt/aivi/models/b4_bracket.json
+
+echo "********* ls /opt on central station  *************"
+ls /opt/ 
+
+ ./azcopy copy "https://staprodlrsaivi002.blob.core.windows.net/artifcat-001/rpms/kmod-nvidia/https://staprodlrsaivi002.blob.core.windows.net/artifact-001?sv=2018-03-28&si=artifact-001-all&sr=c&sig=mpjUomCWW7ZIIaZqp3Ijuj10HGZrF7r6MWptLdqS3us%3D"/tmp/nvidia_kernel_update/files/ --recursive=true
+ 
+ 
+ 
+ echo "********* ls /etc/aivi  *************"
+   sshpass -p '$(AIVIADMIN_PASSWORD)' ssh aiviadmin@172.16.2.41 ls /etc/aivi
+   
+   echo "********* status aivi-inference  *************"
+   sshpass -p '$(AIVIADMIN_PASSWORD)' ssh aiviadmin@172.16.2.41 systemctl status aivi-inference
+   
+   echo "********* OPCUA server *************"
+   sshpass -p '$(AIVIADMIN_PASSWORD)' ssh aiviadmin@172.16.2.41  cat  /opt/aivi_opcua/lib/python3.6/site-packages/opcua_qualif-1.0.0-py3.6.egg/opcua_qualif/server_qualif.py
+
+   echo "********* get conf file ********"
+  sshpass -p '$(AIVIADMIN_PASSWORD)' ssh aiviadmin@172.16.2.41  cat  /etc/aivi/inference/configuration.json
+  
+    echo "********* journalctl aivi-inference  *************"
+   sshpass -p '$(AIVIADMIN_PASSWORD)' ssh aiviadmin@172.16.2.41  journalctl -u opcua-qualif.service -n 100
+   
+   
+   #####################################################################""
+   scp roermond_edgestation:/storage/aivi/buffer/2020/09/15/* . # récupérer les photos de la prod
+   
+   
+   https://github.com/basler/pypylon
+   
+   https://ard10n.wordpress.com/projects/basler-color-camera-with-python3-6-and-pypylon-on-os-high-sierra/
+   
+   
+   ### SITE IMPORTANT #####
+   https://www.formatux.fr/formatux-formatux/index.html

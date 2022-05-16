@@ -1,0 +1,109 @@
+Not found: ./bin/ptxas not found
+
+Relying on driver to perform ptx compilation. This message will be only logged once.
+
+ I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:1006] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+ 
+ 
+Initial1234$#@
+
+
+ansible-playbook FCM-AssemblyCheck.yml -e 'app_name=fcm-assemblycheck app_version=0.8.0 stations=[{"station_name":"nl_rrm_edgestation1","ip":"10.202.214.22"}] plant_name=rmp' --vault-id vault-env.sh --skip-tags spacewalk
+
+
+######### Resizing disk ########
+
+Resizing a root partition is tricky. In Linux, there isn’t a way to actually resize an existing partition. One should delete the partition and re-create a new partition again with the required size in the same position.
+
+I have come across this process when I had to use a custom Debian image and boot up a VM on Azure. The size of the image is around 3GB and the size of the root device (/dev/sda) would be configured to be about 10GB. I preferred extending the existing partition to make use of 10GB on the root device.
+
+Resizing a Linux Root File System partition involves three main steps
+
+Recreating the Partition with the desired size:
+
+Understanding the fdisk Commands: The below snippet is the output of the help text that fdisk prints out when m is typed in the prompt. It also includes the mapping of the steps with the commands to be used.
+
+Welcome to fdisk (util-linux 2.33.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+Command (m for help): mHelp:DOS (MBR)a   toggle a bootable flag # This is required for Rootfs
+b   edit nested BSD disklabel
+c   toggle the dos compatibility flagGenericd   delete a partition # Step 2 - Delete Existing partition
+F   list free unpartitioned space
+l   list known partition types
+n   add a new partition # Step 3 - Create a new partition with the same sector number as the start value
+p   print the partition table # Step 1(and 4)- Print the existing partition table. Note the sector number in the start column and if the boot bit is set (*)
+t   change a partition type
+v   verify the partition table
+i   print information about a partitionMiscm   print this menu
+u   change display/entry units
+x   extra functionality (experts only)ScriptI   load disk layout from sfdisk script file
+O   dump disk layout to sfdisk script fileSave & Exitw   write table to disk and exit # Step 5: Write The partition table
+q   quit without saving changesCreate a new labelg   create a new empty GPT partition table
+G   create a new empty SGI (IRIX) partition table
+o   create a new empty DOS partition table
+s   create a new empty Sun partition table
+
+The process involves these 5 steps as seen below
+
+
+	
+Print the existing partition table ( Make a note of boot bit and the sector number of the start column)
+	Delete the existing partition
+	Create a new partition with the same first sector number
+	Specify the last sector if needed. It defaults to creating the partition till the end. If you only want to have a single partition on the disk, choosing the default option is the best idea
+	Print the newly created partition table
+	Write the partition table
+
+
+sudo fdisk /dev/sda
+Command (m for help): p
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *        2048     9437183     4717568   83  Linux
+Command (m for help): d
+Selected partition 1
+Command (m for help): p
+   Device Boot      Start         End      Blocks   Id  System
+Command (m for help): n
+Command action
+   e   extended
+   p   primary partition (1-4)
+p
+Partition number (1-4, default 1): 1
+First sector (2048-10485759, default 2048):
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-10485759, default 10485759):
+Using default value 10485759
+Command (m for help): p
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1            2048    10485759     5241856   83  Linux
+Command (m for help): w
+The partition table has been altered!
+Calling ioctl() to re-read partition table.
+WARNING: Re-reading the partition table failed with error 16: Device or resource busy.
+The kernel still uses the old table. The new table will be used at
+the next reboot or after you run partprobe(8) or kpartx(8)
+Syncing disks.
+
+The Kernel should be informed of the updated Partition table:
+
+After writing the partition table there would be a warning, which mentions that the kernel is still using the old partition table. To update the kernel with the new partition table, we could either use partprobe or kpartx. I have personally used partprobe and prefer that. It can be installed using the below command.
+
+apt install -y partprobe
+
+After installing run partprobe on the command line. partprobe utility is used to make sure the kernel is aware of the new partition. If everything about re-creating the partition is correct, it shouldn’t error out anything. If the below error occurs, it's possible that you could have specified the wrong start sector, and the next time the system boots, it will not boot correctly since the start sector is not correct. partprobe doesn’t give a constructive message in this situation, but when you get an error like below, it's worth checking if the start sector is the same as the previously existing partition that was deleted.
+
+partprobe /dev/sda
+Warning: WARNING: the kernel failed to re-read the partition table on /dev/sda (Device or resource busy).  As a result, it may not reflect all of your changes until after reboot
+
+Resizing the File System
+
+After the partprobe run is successful, the final step is to resize the root file system. This is the step to write in the file system to the newly added blocks into the partition. You can first start with checking the filesystem on the partition using the e2fsck command and then resize it.
+
+e2fsck -f /dev/sda1
+resize2fs /dev/sda1
+
+These steps would let you resize the root file system as per your requirement without requiring to reboot the system.
+
+
+https://blog.bertello.org/2019/12/resizing-centos-7-disk/

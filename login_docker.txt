@@ -1,0 +1,86 @@
+[?17/?01/?2020 09:51]  HADRICH Hamdi (external):  
+docker login -u acrprodaivi001 -p YtO5Xgk7DFdKZmP7Usub+5qMIctVY7kC acrprodaivi001.azurecr.io  
+ 
+Type	Time	Source	Message
+Error	2021-03-16 13:12:57.401	poc_camera (23087622)	Image acquisition on "poc_camera (23087622)" failed! Error: "The buffer was incompletely grabbed. This can be caused by performance problems of the network hardware used, i.e. network adapter, switch, or ethernet cable. To fix this, try increasing the camera's Inter-Packet Delay in the Transport Layer category to reduce the required bandwidth, and adjust the camera's Packet Size setting to the highest supported frame size."
+
+
+- task: CopyFiles@2
+        inputs:
+          SourceFolder: '$(Build.SourcesDirectory)'
+          contents: 'deployment_script.sh'
+          targetFolder: '$(System.ArtifactsDirectory)'
+        displayName: 'Test publish sh files'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(System.ArtifactsDirectory)/deployment_script.sh'
+          artifactName: deployment
+        displayName: 'Publish the scrips'
+		
+		
+		
+#### Etupre mirroring scrips #####
+#!/usr/bin/env python
+import os
+import subprocess
+
+
+def main():
+    """
+    Send the command on the standard output to launch it in the next task with ansible
+    :return: String
+    """
+    os.environ["DISPLAY"] = ":0"
+    connected_screens_list = subprocess.check_output(['xrandr | grep -A 1 -w connected | sed -e \'s/--//g\''],
+                                                     shell=True)
+
+    screens_information_lines = list(filter(str.strip, connected_screens_list.split("\n")))
+
+    mirroring_command = "xrandr"
+
+    os.system(command_iterator(mirroring_command, build_screens_dict(screens_information_lines)))
+
+
+def build_screens_dict(lines):
+    """
+    That function builds a dictionary that contains for each screen (key) a specific resolution (value)
+    :param lines:
+    :return: dict with a resolution for each screen
+    """
+    screens = dict()
+
+    for i in range(0, len(lines), +2):
+        screen = lines[i].split(' ')[0]
+        resolution = lines[i + 1].split(' ')[3]
+        screens[screen] = resolution
+
+    return screens
+
+
+def command_iterator(final_command, screens):
+    """
+    That function is parsing the dictionary in order to build the command with the right parameters for each screen
+    :param final_command:
+    :param screens:
+    :return: the final command to execute in the next task in ansible
+    """
+    first = True
+    for key, value in screens.items():
+        if first:
+            if "1920x1080" in value:
+                final_command += " --output " + key + " --mode " + value
+            else:
+                final_command += " --output " + key + " --mode " + value + " --scale-from 1200x1024"
+        else:
+            if "1920x1080" in value:
+                final_command += " --output " + key + " --mode " + value + " --same-as " + list(screens.keys())[0]
+            else:
+                final_command += " --output " + key + " --mode " + value + " --scale-from 1200x1024" + \
+                                 " --same-as " + list(screens.keys())[0]
+        first = False
+    return final_command
+
+
+if __name__ == "__main__":
+    main()
